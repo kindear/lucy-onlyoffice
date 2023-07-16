@@ -24,10 +24,24 @@ public interface OfficeCtl {
     public ModelAndView previewRemoteFile(String remoteUrl, HttpServletResponse servletResponse);
 
     /**
+     * 预览远程文件
+     * @param remoteUrl
+     * @return
+     */
+    public ModelAndView previewRemoteFile(String remoteUrl);
+
+    /**
      * 文件预览
      * @param editor
      * @param servletResponse
      * @return
      */
     public ModelAndView previewFile(DocEditor editor, HttpServletResponse servletResponse);
+
+    /**
+     * 文件预览
+     * @param editor
+     * @return
+     */
+    public ModelAndView previewFile(DocEditor editor);
 }

@@ -50,7 +50,7 @@ public class OfficeCtlImpl implements OfficeCtl {
         String fileNameHeader = response.header(Header.CONTENT_DISPOSITION);
         // log.info(fileNameHeader);
         String contentType = response.header(Header.CONTENT_TYPE);
-        log.info(contentType);
+        // log.info(contentType);
         String fileName = remoteUrl;
         if (contentType.equals("application/octet-stream")){
             fileName = StringUtils.substringAfterLast(fileNameHeader,"=");
@@ -90,6 +90,11 @@ public class OfficeCtlImpl implements OfficeCtl {
         return previewFile(docEditor,servletResponse);
     }
 
+    @SneakyThrows
+    @Override
+    public ModelAndView previewRemoteFile(String remoteUrl) {
+        return previewRemoteFile(remoteUrl,null);
+    }
 
     @SneakyThrows
     @Override
@@ -100,5 +105,10 @@ public class OfficeCtlImpl implements OfficeCtl {
         modelAndView.addObject("title",editor.getDocument().getTitle());
         modelAndView.addObject("apiJs",officeProps.getApiJs());
         return modelAndView;
+    }
+
+    @Override
+    public ModelAndView previewFile(DocEditor editor) {
+        return previewFile(editor,null);
     }
 }

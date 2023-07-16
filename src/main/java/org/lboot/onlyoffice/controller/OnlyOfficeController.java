@@ -38,7 +38,7 @@ public class OnlyOfficeController {
     @SneakyThrows
     @RequestMapping("preview/remote")
     @ApiOperation(value = "网络文档预览",notes = "支持各种类型文档")
-    public ModelAndView previewRemote(@RequestParam("url") String url, HttpServletResponse servletResponse) {
-        return officeCtl.previewRemoteFile(url, servletResponse);
+    public ModelAndView previewRemote(@RequestParam("url") String url) {
+        return officeCtl.previewRemoteFile(url);
     }
 }
