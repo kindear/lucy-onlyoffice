@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html style="height: 100%;" xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <div class="form">
+        <div id="iframeEditor"></div>
+    </div>
+    <script type="text/javascript" th:src="${apiJs}"></script>
+    <!-- 先通过 th:inline=“javascript” 添加到标签，这样js代码即可访问model中的属性 -->
+    <script th:inline="javascript">
+        window.docEditor = new DocsAPI.DocEditor("iframeEditor",
+            [[${editor}]]);
+    </script>
+</body>
+</html>
+<style>
+    html {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        background: #fff;
+        color: #333;
+        font-family: Arial, Tahoma, sans-serif;
+        font-size: 12px;
+        font-weight: normal;
+        height: 100%;
+        margin: 0;
+        overflow-y: hidden;
+        padding: 0;
+        text-decoration: none;
+    }
+
+    .form {
+        height: 100%;
+    }
+
+    div {
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
