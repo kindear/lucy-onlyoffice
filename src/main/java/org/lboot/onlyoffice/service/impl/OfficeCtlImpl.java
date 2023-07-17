@@ -14,9 +14,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.lboot.onlyoffice.config.OnlyOfficeProperties;
 import org.lboot.onlyoffice.constant.DocEditorType;
 import org.lboot.onlyoffice.constant.DocumentType;
+import org.lboot.onlyoffice.constant.EditorConfigMode;
 import org.lboot.onlyoffice.domain.DocEditor;
 import org.lboot.onlyoffice.domain.Document;
 import org.lboot.onlyoffice.domain.EditorConfig;
+import org.lboot.onlyoffice.loader.OfficeAuthLoader;
 import org.lboot.onlyoffice.loader.OfficeConfigLoader;
 import org.lboot.onlyoffice.service.OfficeCtl;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,8 @@ public class OfficeCtlImpl implements OfficeCtl {
     OnlyOfficeProperties officeProps;
 
     OfficeConfigLoader configLoader;
+
+    OfficeAuthLoader authLoader;
 
     @Override
     public String getDocumentType(String extName) {
@@ -94,8 +98,27 @@ public class OfficeCtlImpl implements OfficeCtl {
     public DocEditor buildPreviewDocEditor(Document document) {
         // 配置模式
         EditorConfig editorConfig = new EditorConfig();
-        editorConfig.setMode("view");
+        editorConfig.setMode(EditorConfigMode.VIEW);
         editorConfig.setLang(configLoader.getLang());
+        // 构建 Editor
+        DocEditor docEditor = new DocEditor();
+        docEditor.setDocument(document);
+        docEditor.setDocumentType(getDocumentType(document.getFileType()));
+        docEditor.setEditorConfig(editorConfig);
+        docEditor.setHeight("100%");
+        docEditor.setWeight("100%");
+        return docEditor;
+    }
+
+    @SneakyThrows
+    @Override
+    public DocEditor buildEditDocEditor(Document document) {
+        // 配置模式
+        EditorConfig editorConfig = new EditorConfig();
+        editorConfig.setMode(EditorConfigMode.EDIT);
+        editorConfig.setLang(configLoader.getLang());
+        // 设置回调 URL
+        editorConfig.setCallbackUrl("");
         // 构建 Editor
         DocEditor docEditor = new DocEditor();
         docEditor.setDocument(document);
@@ -134,12 +157,48 @@ public class OfficeCtlImpl implements OfficeCtl {
 
     @SneakyThrows
     @Override
+    public ModelAndView previewRemoteFileOnEmbedded(String remoteUrl) {
+        Document document = buildRemoteDocument(remoteUrl);
+        // 构建 Editor
+        DocEditor docEditor = buildPreviewDocEditor(document);
+        //设置移动端
+        docEditor.setType(DocEditorType.EMBEDDED);
+        return previewFile(docEditor);
+    }
+
+    @SneakyThrows
+    @Override
     public ModelAndView previewFile(DocEditor editor) {
+        return previewFile(editor, null);
+    }
+
+    @SneakyThrows
+    @Override
+    public ModelAndView previewFile(DocEditor editor, String title) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OfficeView");
         modelAndView.addObject("editor",editor);
-        modelAndView.addObject("title",editor.getDocument().getTitle());
+        if (Validator.isEmpty(title)){
+            modelAndView.addObject("title",editor.getDocument().getTitle());
+        }
+        else {
+            modelAndView.addObject("title", title);
+        }
         modelAndView.addObject("apiJs",officeProps.getApiJs());
         return modelAndView;
     }
+
+    @SneakyThrows
+    @Override
+    public ModelAndView editFile(DocEditor editor) {
+        return null;
+    }
+
+
+    @SneakyThrows
+    @Override
+    public ModelAndView editRemoteFile(String remoteUrl) {
+        return null;
+    }
+
 }

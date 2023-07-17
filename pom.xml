@@ -33,12 +33,12 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--Spring Indexer-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-indexer</artifactId>
             <optional>true</optional>
         </dependency>
-
         <!-- thymeleaf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

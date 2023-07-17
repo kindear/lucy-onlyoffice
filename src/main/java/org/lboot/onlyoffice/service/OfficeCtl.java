@@ -33,6 +33,13 @@ public interface OfficeCtl {
      DocEditor buildPreviewDocEditor(Document document);
 
     /**
+     * 构建文档编辑 DocEditor
+     * @param document
+     * @return
+     */
+     DocEditor buildEditDocEditor(Document document);
+
+    /**
      * 预览远程文件
      * @return file-temp
      */
@@ -54,10 +61,40 @@ public interface OfficeCtl {
      ModelAndView previewRemoteFileOnMobile(String remoteUrl);
 
     /**
+     * 嵌入式预览远程文件
+     * @param remoteUrl
+     * @return
+     */
+     ModelAndView previewRemoteFileOnEmbedded(String remoteUrl);
+
+    /**
      * 文件预览
      * @param editor
      * @return
      */
     ModelAndView previewFile(DocEditor editor);
+
+    /**
+     * 文件预览 制定预览标题
+     * @param editor
+     * @param title
+     * @return
+     */
+    ModelAndView previewFile(DocEditor editor, String title);
+
+
+    /**
+     * 编辑远程文件
+     * @param remoteUrl
+     * @return
+     */
+    ModelAndView editRemoteFile(String remoteUrl);
+
+    /**
+     * 文件编辑
+     * @param editor
+     * @return
+     */
+    ModelAndView editFile(DocEditor editor);
 
 }
