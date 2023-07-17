@@ -20,5 +20,5 @@ public class EditorConfig {
     String mode;
 
     @ApiModelProperty("语言")
-    String lang = "zh-CN";
+    String lang;
 }

@@ -21,6 +21,7 @@ public class DocEditor {
     String documentType;
 
     // mobile 是在移动设备预览
+    // embedded 嵌入式查看
     @ApiModelProperty("类型")
     String type;
 

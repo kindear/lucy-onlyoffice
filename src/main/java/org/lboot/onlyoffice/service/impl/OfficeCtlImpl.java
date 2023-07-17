@@ -12,21 +12,29 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.lboot.onlyoffice.config.OnlyOfficeProperties;
+import org.lboot.onlyoffice.constant.DocEditorType;
 import org.lboot.onlyoffice.constant.DocumentType;
 import org.lboot.onlyoffice.domain.DocEditor;
 import org.lboot.onlyoffice.domain.Document;
 import org.lboot.onlyoffice.domain.EditorConfig;
+import org.lboot.onlyoffice.loader.OfficeConfigLoader;
 import org.lboot.onlyoffice.service.OfficeCtl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author kindear
+ * Office服务实现
+ */
 @Slf4j
 @Service
 @AllArgsConstructor
 public class OfficeCtlImpl implements OfficeCtl {
     OnlyOfficeProperties officeProps;
+
+    OfficeConfigLoader configLoader;
 
     @Override
     public String getDocumentType(String extName) {
@@ -44,7 +52,7 @@ public class OfficeCtlImpl implements OfficeCtl {
 
     @SneakyThrows
     @Override
-    public ModelAndView previewRemoteFile(String remoteUrl, HttpServletResponse servletResponse) {
+    public Document buildRemoteDocument(String remoteUrl) {
         HttpResponse response = HttpRequest.get(remoteUrl).execute();
         // log.info(response.headers().toString());
         String fileNameHeader = response.header(Header.CONTENT_DISPOSITION);
@@ -77,9 +85,17 @@ public class OfficeCtlImpl implements OfficeCtl {
         String fileType = FileNameUtil.extName(fileName);
         document.setFileType(fileType);
         document.setUrl(remoteUrl);
+        //log.info(document.toString());
+        return document;
+    }
+
+    @SneakyThrows
+    @Override
+    public DocEditor buildPreviewDocEditor(Document document) {
         // 配置模式
         EditorConfig editorConfig = new EditorConfig();
         editorConfig.setMode("view");
+        editorConfig.setLang(configLoader.getLang());
         // 构建 Editor
         DocEditor docEditor = new DocEditor();
         docEditor.setDocument(document);
@@ -87,7 +103,16 @@ public class OfficeCtlImpl implements OfficeCtl {
         docEditor.setEditorConfig(editorConfig);
         docEditor.setHeight("100%");
         docEditor.setWeight("100%");
-        return previewFile(docEditor,servletResponse);
+        return docEditor;
+    }
+
+    @SneakyThrows
+    @Override
+    public ModelAndView previewRemoteFile(String remoteUrl, HttpServletResponse servletResponse) {
+        Document document = buildRemoteDocument(remoteUrl);
+        // 构建 Editor
+        DocEditor docEditor = buildPreviewDocEditor(document);
+        return previewFile(docEditor);
     }
 
     @SneakyThrows
@@ -99,66 +124,22 @@ public class OfficeCtlImpl implements OfficeCtl {
     @SneakyThrows
     @Override
     public ModelAndView previewRemoteFileOnMobile(String remoteUrl) {
-        HttpResponse response = HttpRequest.get(remoteUrl).execute();
-        // log.info(response.headers().toString());
-        String fileNameHeader = response.header(Header.CONTENT_DISPOSITION);
-        // log.info(fileNameHeader);
-        String contentType = response.header(Header.CONTENT_TYPE);
-        // log.info(contentType);
-        String fileName = remoteUrl;
-        if (contentType.equals("application/octet-stream")){
-            fileName = StringUtils.substringAfterLast(fileNameHeader,"=");
-            fileName = URLUtil.decode(fileName);
-            if (Validator.isNotEmpty(fileName)){
-                fileName = fileName.replace("UTF-8''", "");
-            }
-        }else if (contentType.startsWith("image")){
-            // 图片
-            fileName = StringUtils.substringAfterLast(remoteUrl,"/");
-        }else {
-            fileName = StringUtils.substringAfterLast(fileNameHeader,"=");
-            fileName = URLUtil.decode(fileName);
-            if (Validator.isNotEmpty(fileName)){
-                fileName = fileName.replace("UTF-8''", "");
-            }
-        }
-        // 进行MD5 编码
-        String fileKey = SecureUtil.md5(response.bodyStream());
-        // 构建 Document
-        Document document = new Document();
-        document.setKey(fileKey);
-        document.setTitle(fileName);
-        String fileType = FileNameUtil.extName(fileName);
-        document.setFileType(fileType);
-        document.setUrl(remoteUrl);
-        // 配置模式
-        EditorConfig editorConfig = new EditorConfig();
-        editorConfig.setMode("view");
+        Document document = buildRemoteDocument(remoteUrl);
         // 构建 Editor
-        DocEditor docEditor = new DocEditor();
-        docEditor.setDocument(document);
-        docEditor.setDocumentType(getDocumentType(document.getFileType()));
-        docEditor.setEditorConfig(editorConfig);
-        docEditor.setHeight("100%");
-        docEditor.setWeight("100%");
+        DocEditor docEditor = buildPreviewDocEditor(document);
         //设置移动端
-        docEditor.setType("mobile");
+        docEditor.setType(DocEditorType.MOBILE);
         return previewFile(docEditor);
     }
 
     @SneakyThrows
     @Override
-    public ModelAndView previewFile(DocEditor editor, HttpServletResponse servletResponse) {
+    public ModelAndView previewFile(DocEditor editor) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OfficeView");
         modelAndView.addObject("editor",editor);
         modelAndView.addObject("title",editor.getDocument().getTitle());
         modelAndView.addObject("apiJs",officeProps.getApiJs());
         return modelAndView;
-    }
-
-    @Override
-    public ModelAndView previewFile(DocEditor editor) {
-        return previewFile(editor,null);
     }
 }
