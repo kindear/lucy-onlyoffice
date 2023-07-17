@@ -21,6 +21,7 @@ public interface OfficeCtl {
      * 预览远程文件
      * @return file-temp
      */
+    @Deprecated
     public ModelAndView previewRemoteFile(String remoteUrl, HttpServletResponse servletResponse);
 
     /**
@@ -31,11 +32,19 @@ public interface OfficeCtl {
     public ModelAndView previewRemoteFile(String remoteUrl);
 
     /**
+     * 移动端预览远程文件
+     * @param remoteUrl
+     * @return
+     */
+    public ModelAndView previewRemoteFileOnMobile(String remoteUrl);
+
+    /**
      * 文件预览
      * @param editor
      * @param servletResponse
      * @return
      */
+    @Deprecated
     public ModelAndView previewFile(DocEditor editor, HttpServletResponse servletResponse);
 
     /**

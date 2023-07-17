@@ -98,6 +98,56 @@ public class OfficeCtlImpl implements OfficeCtl {
 
     @SneakyThrows
     @Override
+    public ModelAndView previewRemoteFileOnMobile(String remoteUrl) {
+        HttpResponse response = HttpRequest.get(remoteUrl).execute();
+        // log.info(response.headers().toString());
+        String fileNameHeader = response.header(Header.CONTENT_DISPOSITION);
+        // log.info(fileNameHeader);
+        String contentType = response.header(Header.CONTENT_TYPE);
+        // log.info(contentType);
+        String fileName = remoteUrl;
+        if (contentType.equals("application/octet-stream")){
+            fileName = StringUtils.substringAfterLast(fileNameHeader,"=");
+            fileName = URLUtil.decode(fileName);
+            if (Validator.isNotEmpty(fileName)){
+                fileName = fileName.replace("UTF-8''", "");
+            }
+        }else if (contentType.startsWith("image")){
+            // 图片
+            fileName = StringUtils.substringAfterLast(remoteUrl,"/");
+        }else {
+            fileName = StringUtils.substringAfterLast(fileNameHeader,"=");
+            fileName = URLUtil.decode(fileName);
+            if (Validator.isNotEmpty(fileName)){
+                fileName = fileName.replace("UTF-8''", "");
+            }
+        }
+        // 进行MD5 编码
+        String fileKey = SecureUtil.md5(response.bodyStream());
+        // 构建 Document
+        Document document = new Document();
+        document.setKey(fileKey);
+        document.setTitle(fileName);
+        String fileType = FileNameUtil.extName(fileName);
+        document.setFileType(fileType);
+        document.setUrl(remoteUrl);
+        // 配置模式
+        EditorConfig editorConfig = new EditorConfig();
+        editorConfig.setMode("view");
+        // 构建 Editor
+        DocEditor docEditor = new DocEditor();
+        docEditor.setDocument(document);
+        docEditor.setDocumentType(getDocumentType(document.getFileType()));
+        docEditor.setEditorConfig(editorConfig);
+        docEditor.setHeight("100%");
+        docEditor.setWeight("100%");
+        //设置移动端
+        docEditor.setType("mobile");
+        return previewFile(docEditor);
+    }
+
+    @SneakyThrows
+    @Override
     public ModelAndView previewFile(DocEditor editor, HttpServletResponse servletResponse) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OfficeView");
