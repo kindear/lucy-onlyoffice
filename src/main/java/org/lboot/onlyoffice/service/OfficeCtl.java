@@ -112,4 +112,18 @@ public interface OfficeCtl {
      */
     boolean editCallback(Map<String,Object> params);
 
+    /**
+     * 将远程访问文件转化为 Pdf
+     * @param remoteUrl
+     * @return pdf 下载地址
+     */
+    String covertToPdf(String remoteUrl);
+
+    /**
+     * 将文件转化未 pdf
+     * @param document
+     * @return
+     */
+    String covertToPdf(Document document);
+
 }

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author kindear
  * onlyoffice 参数配置
  */
+@Data
 @Slf4j
 @Configuration("onlyoffice")
 public class OnlyOfficeProperties {

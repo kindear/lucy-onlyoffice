@@ -7,9 +7,13 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.lboot.onlyoffice.service.OfficeCtl;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author kindear
@@ -43,4 +47,6 @@ public class OnlyOfficeController {
     public ModelAndView editRemote(@RequestParam("url") String url){
         return officeCtl.editRemoteFile(url);
     }
+
+
 }

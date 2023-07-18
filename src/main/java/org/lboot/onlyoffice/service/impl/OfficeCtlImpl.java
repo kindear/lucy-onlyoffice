@@ -8,6 +8,8 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -274,5 +276,37 @@ public class OfficeCtlImpl implements OfficeCtl {
             return true;
         }
         return false;
+    }
+
+
+    @SneakyThrows
+    @Override
+    public String covertToPdf(String remoteUrl) {
+        Document document = buildRemoteDocument(remoteUrl);
+        return covertToPdf(document);
+    }
+
+
+    @SneakyThrows
+    @Override
+    public String covertToPdf(Document document) {
+        // 构建转化参数
+        OfficeConvertParams convertParams = new OfficeConvertParams(document);
+        // 设置转化类型
+        convertParams.setOutputtype("pdf");
+        // 构建请求
+        HttpRequest request = HttpUtil.createPost(officeProps.getOfficeDocumentHost().concat("/ConvertService.ashx"));
+        // 设置请求体
+        String body = JSONUtil.toJsonStr(convertParams);
+        request.body(body);
+        // 设置请求头
+        request.header("Accept", "application/json");
+        // 发送请求并获取响应
+        HttpResponse response = request.execute();
+        String result = response.body();
+        log.info(result);
+        // 将结果转化
+        OfficeConvertResult convertResult = JSONUtil.toBean(result, OfficeConvertResult.class);
+        return convertResult.getFileUrl();
     }
 }
