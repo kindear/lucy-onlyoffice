@@ -36,4 +36,11 @@ public class OnlyOfficeController {
     public ModelAndView previewRemoteOnMobile(@RequestParam("url") String url) {
         return officeCtl.previewRemoteFileOnMobile(url);
     }
+
+    @SneakyThrows
+    @RequestMapping("edit/remote")
+    @ApiOperation(value = "网络文档编辑",notes = "支持各种类型文档")
+    public ModelAndView editRemote(@RequestParam("url") String url){
+        return officeCtl.editRemoteFile(url);
+    }
 }

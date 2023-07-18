@@ -118,7 +118,7 @@ public class OfficeCtlImpl implements OfficeCtl {
         editorConfig.setMode(EditorConfigMode.EDIT);
         editorConfig.setLang(configLoader.getLang());
         // 设置回调 URL
-        editorConfig.setCallbackUrl("");
+        editorConfig.setCallbackUrl(officeProps.getCallbackUrl());
         // 构建 Editor
         DocEditor docEditor = new DocEditor();
         docEditor.setDocument(document);
@@ -184,21 +184,25 @@ public class OfficeCtlImpl implements OfficeCtl {
         else {
             modelAndView.addObject("title", title);
         }
-        modelAndView.addObject("apiJs",officeProps.getApiJs());
+        modelAndView.addObject("apiJs",officeProps.getOfficeDocumentApiJs());
         return modelAndView;
     }
 
     @SneakyThrows
     @Override
     public ModelAndView editFile(DocEditor editor) {
-        return null;
+        return previewFile(editor, null);
     }
 
 
     @SneakyThrows
     @Override
     public ModelAndView editRemoteFile(String remoteUrl) {
-        return null;
+        Document document = buildRemoteDocument(remoteUrl);
+        // 构建 Editor
+        DocEditor docEditor = buildEditDocEditor(document);
+        // 渲染编辑
+        return editFile(docEditor);
     }
 
 }

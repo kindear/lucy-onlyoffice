@@ -23,4 +23,12 @@ public interface OfficeConfigLoader {
         return "zh-CN";
     }
 
+    /**
+     * 获取回调地址
+     * @return
+     */
+    default String getCallbackUrl(){
+        return "";
+    }
+
 }
