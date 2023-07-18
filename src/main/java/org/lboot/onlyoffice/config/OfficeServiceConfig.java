@@ -1,9 +1,6 @@
 package org.lboot.onlyoffice.config;
 
-import org.lboot.onlyoffice.loader.DefaultOfficeAuthLoader;
-import org.lboot.onlyoffice.loader.DefaultOfficeConfigLoader;
-import org.lboot.onlyoffice.loader.OfficeAuthLoader;
-import org.lboot.onlyoffice.loader.OfficeConfigLoader;
+import org.lboot.onlyoffice.loader.*;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -26,5 +23,12 @@ public class OfficeServiceConfig {
     @ConditionalOnMissingBean(value = OfficeAuthLoader.class)
     public OfficeAuthLoader officeAuthLoader(){
         return new DefaultOfficeAuthLoader();
+    }
+
+    // 默认Office存储实现
+    @Bean
+    @ConditionalOnMissingBean(OfficeStoreLoader.class)
+    public OfficeStoreLoader officeStoreLoader(){
+        return new DefaultOfficeStoreLoader();
     }
 }

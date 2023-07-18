@@ -1,6 +1,8 @@
 package org.lboot.onlyoffice.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.lboot.onlyoffice.service.OfficeCtl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +17,12 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("office")
+@AllArgsConstructor
 public class OfficeCallbackController {
+    OfficeCtl officeCtl;
 
     @PostMapping("callback")
     public Object officeCallBack(@RequestBody Map<String,Object> params){
-        log.info(params.toString());
-        return null;
+        return officeCtl.editCallback(params);
     }
 }

@@ -1,5 +1,6 @@
 package org.lboot.onlyoffice.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.URLUtil;
@@ -13,19 +14,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.lboot.onlyoffice.config.OnlyOfficeProperties;
 import org.lboot.onlyoffice.constant.DocEditorType;
+import org.lboot.onlyoffice.constant.DocumentStatus;
 import org.lboot.onlyoffice.constant.DocumentType;
 import org.lboot.onlyoffice.constant.EditorConfigMode;
-import org.lboot.onlyoffice.domain.DocEditor;
-import org.lboot.onlyoffice.domain.Document;
-import org.lboot.onlyoffice.domain.EditorConfig;
-import org.lboot.onlyoffice.domain.OfficeUser;
+import org.lboot.onlyoffice.domain.*;
+import org.lboot.onlyoffice.event.OfficeEditBuildEvent;
+import org.lboot.onlyoffice.event.OfficeEditCloseEvent;
 import org.lboot.onlyoffice.loader.OfficeAuthLoader;
 import org.lboot.onlyoffice.loader.OfficeConfigLoader;
+import org.lboot.onlyoffice.loader.OfficeStoreLoader;
 import org.lboot.onlyoffice.service.OfficeCtl;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author kindear
@@ -40,6 +47,11 @@ public class OfficeCtlImpl implements OfficeCtl {
     OfficeConfigLoader configLoader;
 
     OfficeAuthLoader authLoader;
+
+    OfficeStoreLoader storeLoader;
+
+    @Resource
+    ApplicationContext context;
 
     @Override
     public String getDocumentType(String extName) {
@@ -225,4 +237,42 @@ public class OfficeCtlImpl implements OfficeCtl {
         return editFile(docEditor);
     }
 
+    @SneakyThrows
+    @Override
+    public boolean editCallback(Map<String, Object> params) {
+        DocumentEditCallback callback = BeanUtil.fillBeanWithMap(params,new DocumentEditCallback(),false);
+        log.info(callback.toString());
+        // 如果是状态 1
+        if (callback.getStatus().equals(DocumentStatus.BEING_EDITED.getCode())){
+            // 获取用户操作信息
+            List<ActionBean> actions = callback.getActions();
+            // 获取文件ID
+            String fileKey = callback.getKey();
+            for (ActionBean action:actions){
+                // 用户断开编辑
+                if (action.getType() == 0){
+                    context.publishEvent(new OfficeEditCloseEvent(this, action.getUserid(), fileKey));
+                }
+                // 用户新建编辑
+                else if (action.getType() == 1){
+                    context.publishEvent(new OfficeEditBuildEvent(this, action.getUserid(), fileKey));
+                }
+            }
+        }
+        // status == 2
+        else if (callback.getStatus().equals(DocumentStatus.READY_FOR_SAVING.getCode())){
+            // 获取文件ID
+            String fileKey = callback.getKey();
+            HttpResponse response = HttpRequest.get(callback.getUrl()).execute();
+            // 获取流
+            InputStream stream = response.bodyStream();
+            // 更新文件
+            storeLoader.writeFile(fileKey, stream);
+            // 关闭请求连接
+            response.close();
+            // 更新文件
+            return true;
+        }
+        return false;
+    }
 }

@@ -25,7 +25,7 @@ public class DocumentEditCallback {
      2 - 使用服务器配置中的设置由计时器执行强制保存请求。
      当状态值仅等于6或7时，存在类型。
      */
-    private int forcesavetype;
+    private Integer forcesavetype;
     /** 文档更改历史记录 */
     private HistoryBean history;
     /** 【必需】文档key */
@@ -39,7 +39,7 @@ public class DocumentEditCallback {
      *  <li>当执行强制保存请求时，接收状态 6 （ 7 ）</li>
      *  </ul>
      */
-    private int status;
+    private Integer status;
     /** 文档存储服务中缓存的已编辑的文档的链接 */
     private String url;
     /** 发送到命令服务的自定义信息 */

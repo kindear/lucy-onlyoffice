@@ -5,6 +5,7 @@ import org.lboot.onlyoffice.domain.Document;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @author kindear
@@ -104,6 +105,11 @@ public interface OfficeCtl {
      */
     ModelAndView editFile(Document document);
 
-
+    /**
+     * 编辑回调
+     * @param params
+     * @return
+     */
+    boolean editCallback(Map<String,Object> params);
 
 }
