@@ -279,6 +279,28 @@ public class OfficeCtlImpl implements OfficeCtl {
     }
 
 
+
+
+    /**
+     * 构建转化请求
+     * @param convertParams
+     * @return
+     */
+    public String covertRequest(OfficeConvertParams convertParams){
+        // 构建请求
+        HttpRequest request = HttpUtil.createPost(officeProps.getOfficeDocumentHost().concat("/ConvertService.ashx"));
+        // 设置请求体
+        String body = JSONUtil.toJsonStr(convertParams);
+        request.body(body);
+        // 设置请求头
+        request.header("Accept", "application/json");
+        // 发送请求并获取响应
+        HttpResponse response = request.execute();
+        String result = response.body();
+        log.info(result);
+        return result;
+    }
+
     @SneakyThrows
     @Override
     public String covertToPdf(String remoteUrl) {
@@ -294,19 +316,25 @@ public class OfficeCtlImpl implements OfficeCtl {
         OfficeConvertParams convertParams = new OfficeConvertParams(document);
         // 设置转化类型
         convertParams.setOutputtype("pdf");
-        // 构建请求
-        HttpRequest request = HttpUtil.createPost(officeProps.getOfficeDocumentHost().concat("/ConvertService.ashx"));
-        // 设置请求体
-        String body = JSONUtil.toJsonStr(convertParams);
-        request.body(body);
-        // 设置请求头
-        request.header("Accept", "application/json");
-        // 发送请求并获取响应
-        HttpResponse response = request.execute();
-        String result = response.body();
-        log.info(result);
         // 将结果转化
-        OfficeConvertResult convertResult = JSONUtil.toBean(result, OfficeConvertResult.class);
+        OfficeConvertResult convertResult = JSONUtil.toBean(covertRequest(convertParams), OfficeConvertResult.class);
+        return convertResult.getFileUrl();
+    }
+
+    @Override
+    public String generateThumbnail(String remoteUrl) {
+        Document document = buildRemoteDocument(remoteUrl);
+        return generateThumbnail(document);
+    }
+
+    @Override
+    public String generateThumbnail(Document document) {
+        // 构建转化参数
+        OfficeConvertParams convertParams = new OfficeConvertParams(document);
+        // 设置转化类型
+        convertParams.setOutputtype("png");
+        // 将结果转化
+        OfficeConvertResult convertResult = JSONUtil.toBean(covertRequest(convertParams), OfficeConvertResult.class);
         return convertResult.getFileUrl();
     }
 }

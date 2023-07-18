@@ -33,4 +33,13 @@ public class OnlyOfficeRestController {
         result.put("downloadUrl", downloadUrl);
         return result;
     }
+    @SneakyThrows
+    @GetMapping("covert/png")
+    @ApiOperation(value = "网络文档生成png")
+    public Map<String,Object> covertPng(@RequestParam("url") String url){
+        String downloadUrl = officeCtl.generateThumbnail(url);
+        Map<String,Object> result = new HashMap<>();
+        result.put("downloadUrl", downloadUrl);
+        return result;
+    }
 }

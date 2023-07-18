@@ -126,4 +126,18 @@ public interface OfficeCtl {
      */
     String covertToPdf(Document document);
 
+    /**
+     * 文件生成缩略图
+     * @param remoteUrl
+     * @return
+     */
+    String generateThumbnail(String remoteUrl);
+
+    /**
+     * 文件生成缩略图
+     * @param document
+     * @return
+     */
+    String generateThumbnail(Document document);
+
 }
