@@ -18,6 +18,7 @@ import org.lboot.onlyoffice.constant.EditorConfigMode;
 import org.lboot.onlyoffice.domain.DocEditor;
 import org.lboot.onlyoffice.domain.Document;
 import org.lboot.onlyoffice.domain.EditorConfig;
+import org.lboot.onlyoffice.domain.OfficeUser;
 import org.lboot.onlyoffice.loader.OfficeAuthLoader;
 import org.lboot.onlyoffice.loader.OfficeConfigLoader;
 import org.lboot.onlyoffice.service.OfficeCtl;
@@ -100,6 +101,11 @@ public class OfficeCtlImpl implements OfficeCtl {
         EditorConfig editorConfig = new EditorConfig();
         editorConfig.setMode(EditorConfigMode.VIEW);
         editorConfig.setLang(configLoader.getLang());
+        // 设置用户
+        OfficeUser officeUser = new OfficeUser();
+        officeUser.setId(authLoader.getUserId());
+        officeUser.setName(authLoader.getUserName());
+        editorConfig.setUser(officeUser);
         // 构建 Editor
         DocEditor docEditor = new DocEditor();
         docEditor.setDocument(document);
@@ -117,6 +123,11 @@ public class OfficeCtlImpl implements OfficeCtl {
         EditorConfig editorConfig = new EditorConfig();
         editorConfig.setMode(EditorConfigMode.EDIT);
         editorConfig.setLang(configLoader.getLang());
+        // 设置用户
+        OfficeUser officeUser = new OfficeUser();
+        officeUser.setId(authLoader.getUserId());
+        officeUser.setName(authLoader.getUserName());
+        editorConfig.setUser(officeUser);
         // 设置回调 URL
         editorConfig.setCallbackUrl(officeProps.getCallbackUrl());
         // 构建 Editor
@@ -194,6 +205,15 @@ public class OfficeCtlImpl implements OfficeCtl {
         return previewFile(editor, null);
     }
 
+
+    @SneakyThrows
+    @Override
+    public ModelAndView editFile(Document document) {
+        // 构建 Editor
+        DocEditor docEditor = buildEditDocEditor(document);
+        // 渲染编辑
+        return editFile(docEditor);
+    }
 
     @SneakyThrows
     @Override

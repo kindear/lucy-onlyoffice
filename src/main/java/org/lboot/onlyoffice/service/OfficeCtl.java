@@ -97,4 +97,13 @@ public interface OfficeCtl {
      */
     ModelAndView editFile(DocEditor editor);
 
+    /**
+     * 文件编辑
+     * @param document
+     * @return
+     */
+    ModelAndView editFile(Document document);
+
+
+
 }
