@@ -191,6 +191,15 @@ public class OfficeCtlImpl implements OfficeCtl {
         return previewFile(docEditor);
     }
 
+
+    @SneakyThrows
+    @Override
+    public ModelAndView previewFile(String fileKey) {
+        Document document = storeLoader.readFile(fileKey);
+        DocEditor docEditor = buildPreviewDocEditor(document);
+        return previewFile(docEditor);
+    }
+
     @SneakyThrows
     @Override
     public ModelAndView previewFile(DocEditor editor) {

@@ -3,6 +3,7 @@ package org.lboot.onlyoffice.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.lboot.onlyoffice.service.OfficeCtl;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("office")
 @AllArgsConstructor
+@ConditionalOnProperty(prefix = "onlyoffice.api",name = "enable",havingValue = "true")
 public class OfficeCallbackController {
     OfficeCtl officeCtl;
 

@@ -69,6 +69,13 @@ public interface OfficeCtl {
      ModelAndView previewRemoteFileOnEmbedded(String remoteUrl);
 
     /**
+     * 根据文件key 预览文件
+     * @param fileKey
+     * @return 预览试图
+     */
+     ModelAndView previewFile(String fileKey);
+
+    /**
      * 文件预览
      * @param editor
      * @return

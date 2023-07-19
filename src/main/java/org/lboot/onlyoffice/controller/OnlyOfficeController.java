@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.lboot.onlyoffice.service.OfficeCtl;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import java.util.Map;
 @RequestMapping("office")
 @Api(tags = "OnlyOffice相关服务")
 @AllArgsConstructor
+@ConditionalOnProperty(prefix = "onlyoffice.api",name = "enable",havingValue = "true")
 public class OnlyOfficeController {
     OfficeCtl officeCtl;
 
