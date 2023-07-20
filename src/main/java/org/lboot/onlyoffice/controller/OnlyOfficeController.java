@@ -8,13 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.lboot.onlyoffice.service.OfficeCtl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author kindear
@@ -41,6 +37,13 @@ public class OnlyOfficeController {
     @ApiOperation(value = "网络文档预览(移动端)",notes = "支持各种类型文档")
     public ModelAndView previewRemoteOnMobile(@RequestParam("url") String url) {
         return officeCtl.previewRemoteFileOnMobile(url);
+    }
+
+    @SneakyThrows
+    @RequestMapping("preview/embedded/remote")
+    @ApiOperation(value = "网络文档预览(嵌入)",notes = "支持各种类型文档")
+    public ModelAndView previewRemoteOnEmbedded(@RequestParam("url") String url) {
+        return officeCtl.previewRemoteFileOnEmbedded(url);
     }
 
     @SneakyThrows

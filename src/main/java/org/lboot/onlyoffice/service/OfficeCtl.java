@@ -98,12 +98,14 @@ public interface OfficeCtl {
      */
     ModelAndView editRemoteFile(String remoteUrl);
 
+
+
     /**
      * 文件编辑
-     * @param editor
+     * @param fileKey
      * @return
      */
-    ModelAndView editFile(DocEditor editor);
+    ModelAndView editFile(String fileKey);
 
     /**
      * 文件编辑
@@ -111,6 +113,15 @@ public interface OfficeCtl {
      * @return
      */
     ModelAndView editFile(Document document);
+
+    /**
+     * 文件编辑
+     * @param editor
+     * @return
+     */
+    ModelAndView editFile(DocEditor editor);
+
+
 
     /**
      * 编辑回调

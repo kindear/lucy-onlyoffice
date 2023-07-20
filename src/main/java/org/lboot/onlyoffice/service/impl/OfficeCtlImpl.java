@@ -224,6 +224,16 @@ public class OfficeCtlImpl implements OfficeCtl {
 
     @SneakyThrows
     @Override
+    public ModelAndView editFile(String fileKey) {
+        Document document = storeLoader.readFile(fileKey);
+        // 构建 Editor
+        DocEditor docEditor = buildEditDocEditor(document);
+        // 渲染编辑
+        return editFile(docEditor);
+    }
+
+    @SneakyThrows
+    @Override
     public ModelAndView editFile(DocEditor editor) {
         return previewFile(editor, null);
     }
@@ -247,6 +257,7 @@ public class OfficeCtlImpl implements OfficeCtl {
         // 渲染编辑
         return editFile(docEditor);
     }
+
 
     @SneakyThrows
     @Override
