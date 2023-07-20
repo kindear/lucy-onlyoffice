@@ -28,19 +28,13 @@ public class OnlyOfficeRestController {
     @SneakyThrows
     @GetMapping("covert/pdf")
     @ApiOperation(value = "网络文档转pdf")
-    public Map<String,Object> covertPdf(@RequestParam("url") String url){
-        String downloadUrl = officeCtl.covertToPdf(url);
-        Map<String,Object> result = new HashMap<>();
-        result.put("downloadUrl", downloadUrl);
-        return result;
+    public String covertPdf(@RequestParam("url") String url){
+        return officeCtl.covertToPdf(url);
     }
     @SneakyThrows
     @GetMapping("covert/png")
     @ApiOperation(value = "网络文档生成png")
-    public Map<String,Object> covertPng(@RequestParam("url") String url){
-        String downloadUrl = officeCtl.generateThumbnail(url);
-        Map<String,Object> result = new HashMap<>();
-        result.put("downloadUrl", downloadUrl);
-        return result;
+    public String covertPng(@RequestParam("url") String url){
+        return officeCtl.generateThumbnail(url);
     }
 }

@@ -144,6 +144,7 @@ public interface OfficeCtl {
      */
     String covertToPdf(Document document);
 
+
     /**
      * 文件生成缩略图
      * @param remoteUrl
