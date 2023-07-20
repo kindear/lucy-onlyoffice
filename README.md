@@ -29,7 +29,7 @@
             <id>jitpack.io</id>
             <url>https://www.jitpack.io</url>
         </repository>
-</repositories>复制到剪贴板错误复制成功
+</repositories>
 ```
 
 ### 2. 引入依赖
@@ -43,7 +43,7 @@
             <groupId>com.gitee.lboot</groupId>
             <artifactId>lucy-onlyoffice</artifactId>
             <version>${version}</version>
-        </dependency>复制到剪贴板错误复制成功
+        </dependency>
 ```
 
 ### 3. 修改配置文件
