@@ -68,15 +68,13 @@ onlyoffice.document.callback.host=http://onlytest.example.cn/office/callback
 onlyoffice.api.enable=true
 ```
 
+## 效果
+
+[点击查看](https://lucy.apisev.cn/#/lucy-onlyoffice/use?id=%e9%a2%84%e8%a7%88)
 
 
-## 快速上手
 
-`lucy-onlyoffice`提供了`OfficeCtl`功能服务类，可以通过引入该类，实现介绍中的功能。
+## 完整文档
 
-## [预览](https://lucy.apisev.cn/#/lucy-onlyoffice/use?id=预览)
-
-> 测试文档地址 : `http://150.158.135.236:8888/down/bzQQMYQmVM46.pdf`
-
-<iframe width="100%" height="100px" src="https://lucy.apisev.cn/lucy-onlyoffice/input.html" frameborder="0" allowfullscreen="" style="box-sizing: inherit; font-size: 16px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-size-adjust: none; margin: 1em 0px; color: rgb(77, 77, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"></iframe>
+[点此查看](https://lucy.apisev.cn/#/lucy-onlyoffice/README)
 
