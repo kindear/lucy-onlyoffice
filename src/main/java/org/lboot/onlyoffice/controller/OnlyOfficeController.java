@@ -47,12 +47,12 @@ public class OnlyOfficeController {
         return officeCtl.previewRemoteFileOnEmbedded(url);
     }
 
-//    @SneakyThrows
-//    @RequestMapping("preview/{id}")
-//    @ApiOperation(value = "文档预览(存储系统)")
-//    public ModelAndView preview(@PathVariable("id") String id){
-//        return officeCtl.previewFile(id);
-//    }
+    @SneakyThrows
+    @RequestMapping("preview/{id}")
+    @ApiOperation(value = "文档预览(存储系统)")
+    public ModelAndView preview(@PathVariable("id") String id){
+        return officeCtl.previewFile(id);
+    }
 
     @SneakyThrows
     @RequestMapping("edit/remote")
@@ -61,10 +61,10 @@ public class OnlyOfficeController {
         return officeCtl.editRemoteFile(url);
     }
 
-//    @SneakyThrows
-//    @RequestMapping("edit/{id}")
-//    @ApiOperation(value = "文档编辑(存储系统)",notes = "支持word,excel等")
-//    public ModelAndView edit(@PathVariable("id") String id){
-//        return officeCtl.editFile(id);
-//    }
+    @SneakyThrows
+    @RequestMapping("edit/{id}")
+    @ApiOperation(value = "文档编辑(存储系统)",notes = "支持word,excel等")
+    public ModelAndView edit(@PathVariable("id") String id){
+        return officeCtl.editFile(id);
+    }
 }
