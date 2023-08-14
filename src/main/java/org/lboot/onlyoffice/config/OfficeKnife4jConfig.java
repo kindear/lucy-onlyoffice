@@ -22,7 +22,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @AllArgsConstructor
 public class OfficeKnife4jConfig {
 
-    @ConditionalOnProperty(prefix = "office.api",name = "enable",havingValue = "true")
     @Bean(value = "officeApi")
     public Docket officeApi() {
         String groupName="office服务接口";
