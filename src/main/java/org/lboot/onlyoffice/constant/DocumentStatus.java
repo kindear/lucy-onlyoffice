@@ -1,6 +1,8 @@
 package org.lboot.onlyoffice.constant;
 
 
+import lombok.Getter;
+
 /**
  * 文档的状态:
  *
@@ -14,6 +16,7 @@ package org.lboot.onlyoffice.constant;
  * @author: zhangcx
  * @date: 2019/8/23 14:04
  */
+@Getter
 public enum DocumentStatus {
     NOT_FOUND(0, "找不到带有密钥标识符的文档"),
     BEING_EDITED(1, "正在编辑文档"),
@@ -29,14 +32,6 @@ public enum DocumentStatus {
     DocumentStatus(int code, String msg) {
         this.code = code;
         this.msg = msg;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getMsg() {
-        return msg;
     }
 
     @Override

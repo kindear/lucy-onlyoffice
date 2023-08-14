@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Slf4j
 @RestController
 @RequestMapping("office")
@@ -31,6 +28,7 @@ public class OnlyOfficeRestController {
     public String covertPdf(@RequestParam("url") String url){
         return officeCtl.covertToPdf(url);
     }
+
     @SneakyThrows
     @GetMapping("covert/png")
     @ApiOperation(value = "网络文档生成png")
