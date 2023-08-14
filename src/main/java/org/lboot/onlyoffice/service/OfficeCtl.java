@@ -128,7 +128,7 @@ public interface OfficeCtl {
      * @param params
      * @return
      */
-    boolean editCallback(Map<String,Object> params);
+    Object editCallback(Map<String,Object> params);
 
     /**
      * 将远程访问文件转化为 Pdf

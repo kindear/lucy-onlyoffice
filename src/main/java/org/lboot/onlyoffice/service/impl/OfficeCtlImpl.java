@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -261,9 +262,11 @@ public class OfficeCtlImpl implements OfficeCtl {
 
     @SneakyThrows
     @Override
-    public boolean editCallback(Map<String, Object> params) {
+    public Object editCallback(Map<String, Object> params) {
         DocumentEditCallback callback = BeanUtil.fillBeanWithMap(params,new DocumentEditCallback(),false);
         log.info(callback.toString());
+        Map<String,Object> result = new HashMap<>();
+        result.put("error",0);
         // 如果是状态 1
         if (callback.getStatus().equals(DocumentStatus.BEING_EDITED.getCode())){
             // 获取用户操作信息
@@ -292,10 +295,8 @@ public class OfficeCtlImpl implements OfficeCtl {
             storeLoader.writeFile(fileKey, stream);
             // 关闭请求连接
             response.close();
-            // 更新文件
-            return true;
         }
-        return false;
+        return result;
     }
 
 
