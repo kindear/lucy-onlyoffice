@@ -15,7 +15,7 @@
 
 ## 安装
 
-使用该功能之前，需要完成[【OnlyOffice安装】](https://lucy.apisev.cn/#/lucy-onlyoffice/onlyoffice)
+使用该功能之前，需要完成[【OnlyOffice安装】](https://lucy.apisev.cn/#/projects/lucy-onlyoffice/onlyoffice)
 
 `lucy-onlyoffice`支持`jar`引入集成和独立部署安装(下载源码自行打包部署)
 
@@ -34,7 +34,7 @@
 
 ### 2. 引入依赖
 
-根据[更新日志](https://lucy.apisev.cn/#/lucy-onlyoffice/changelog)决定版本号引入依赖
+根据[更新日志](https://lucy.apisev.cn/#/projects/lucy-onlyoffice/changelog)决定版本号引入依赖
 
 `version`与更新日志对应
 
@@ -55,7 +55,7 @@
 | 服务地址 | `onlyoffice`部署的地址              |      |
 | 回调地址 | 业务系统部署地址 + 接收编辑回调路由 |      |
 
-> 测试接口配置可选，配置该值为 `true` 开启默认接口，可以直接使用，参考[快速上手](https://lucy.apisev.cn/#/lucy-onlyoffice/use)
+> 测试接口配置可选，配置该值为 `true` 开启默认接口，可以直接使用，参考[快速上手](https://lucy.apisev.cn/#/projects/lucy-onlyoffice/use)
 
 ```properties
 # 服务地址 -> 将 http://office.example.cn 替换为 onlyoffice部署地址
@@ -70,11 +70,11 @@ onlyoffice.api.enable=true
 
 ## 效果
 
-[点击查看](https://lucy.apisev.cn/#/lucy-onlyoffice/use?id=%e9%a2%84%e8%a7%88)
+[点击查看](https://lucy.apisev.cn/#/projects/lucy-onlyoffice/use?id=%e9%a2%84%e8%a7%88)
 
 
 
 ## 完整文档
 
-[点此查看](https://lucy.apisev.cn/#/lucy-onlyoffice/README)
+[点此查看](https://lucy.apisev.cn/#/projects/lucy-onlyoffice/README)
 
