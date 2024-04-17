@@ -1,6 +1,7 @@
 
 
 ## 介绍
+[文档](https://kindear.github.io/lucy-onlyoffice/)
 
 `lucy-onlyoffice`是依赖于`onlyoffice`的`springboot`集成解决方案，该解决方案简化了`onlyoffice`的使用难度，支持对常见文档类型的预览，编辑和转化。该解决方案提供了功能的拓展实现，用户可以基于拓展接口，实现业务系统和该解决方案的集成。
 
@@ -15,7 +16,7 @@
 
 ## 安装
 
-使用该功能之前，需要完成[【OnlyOffice安装】](https://lucy.apisev.cn/#/projects/lucy-onlyoffice/onlyoffice)
+使用该功能之前，需要完成 [OnlyOffice安装](https://kindear.github.io/lucy-onlyoffice/#/onlyoffice)
 
 `lucy-onlyoffice`支持`jar`引入集成和独立部署安装(下载源码自行打包部署)
 
@@ -55,7 +56,7 @@
 | 服务地址 | `onlyoffice`部署的地址              |      |
 | 回调地址 | 业务系统部署地址 + 接收编辑回调路由 |      |
 
-> 测试接口配置可选，配置该值为 `true` 开启默认接口，可以直接使用，参考[快速上手](https://lucy.apisev.cn/#/projects/lucy-onlyoffice/use)
+> 测试接口配置可选，配置该值为 `true` 开启默认接口，可以直接使用，参考[快速上手](https://kindear.github.io/lucy-onlyoffice/#/use)
 
 ```properties
 # 服务地址 -> 将 http://office.example.cn 替换为 onlyoffice部署地址

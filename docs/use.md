@@ -1,15 +1,20 @@
 `lucy-onlyoffice`提供了`OfficeCtl`功能服务类，可以通过引入该类，实现介绍中的功能。
 
-## 预览
-> 测试文档地址 : http://150.158.135.236:8888/down/bzQQMYQmVM46.pdf
 
- <iframe  
- width=100% 
- height=100px
- src="/input.html"  
- frameborder=0  
- allowfullscreen>
- </iframe>
+
+## 预览
+
+
+ <html>
+<head>
+  <title>地址跳转</title>
+<body>
+  <button onclick="window.open('http://onlytest.apisev.cn/office/preview/remote?url=http://150.158.135.236:8888/down/bzQQMYQmVM46.pdf','_blank')">PC预览</button>
+  <button onclick="window.open('http://onlytest.apisev.cn/office/preview/embedded/remote?url=http://150.158.135.236:8888/down/bzQQMYQmVM46.pdf','_blank')">嵌入式预览</button>
+  <button onclick="window.open('http://onlytest.apisev.cn/office/preview/mobile/remote?url=http://150.158.135.236:8888/down/bzQQMYQmVM46.pdf','_blank')">移动端预览</button>
+</body>
+</html>
+
 
 | 方法                                          | 参数                               | 备注                                            |
 | --------------------------------------------- | ---------------------------------- | ----------------------------------------------- |
@@ -60,6 +65,14 @@ public class OnlyOfficeController {
 ```
 
 ## 编辑
+
+ <html>
+<head>
+  <title>地址跳转</title>
+<body>
+  <button onclick="window.open('http://onlytest.apisev.cn/office/edit/remote?url=http://150.158.135.236:8888/down/sSvtjfBd4W4J.docx','_blank')">PC编辑</button>
+</body>
+</html>
 
 | 方法                                    | 参数                   | 备注                                                         |
 | --------------------------------------- | ---------------------- | ------------------------------------------------------------ |
