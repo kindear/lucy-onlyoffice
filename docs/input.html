@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>地址跳转</title>
+  <script>
+    function redirectToLinkA() {
+      var userInput = document.getElementById('inputUrl').value;
+      var url = 'http://onlytest.apisev.cn/office/preview/remote?url='+ userInput;
+      window.open(url,'_blank')
+    }
+    function redirectToLinkB() {
+      var userInput = document.getElementById('inputUrl').value;
+      var url = 'http://onlytest.apisev.cn/office/preview/embedded/remote?url='+ userInput;
+      window.open(url,'_blank')
+    }
+    function redirectToLinkC() {
+      var userInput = document.getElementById('inputUrl').value;
+      var url = 'http://onlytest.apisev.cn/office/preview/mobile/remote?url='+ userInput;
+      window.open(url,'_blank')
+    }
+  </script>
+</head>
+<body>
+  <input type="text" id="inputUrl" placeholder="请输入预览文件链接">
+  <button onclick="redirectToLinkA()">PC预览</button>
+  <button onclick="redirectToLinkB()">嵌入式预览</button>
+  <button onclick="redirectToLinkC()">移动端预览</button>
+</body>
+</html>
